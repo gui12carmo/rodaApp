@@ -10,7 +10,7 @@ import com.example.projetoldii.UserDao
 
 @Database(
     entities = [User::class, Project::class, TaskType::class, Task::class, AddProgrammer::class],
-    version = 1
+    version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun UserDao(): UserDao
