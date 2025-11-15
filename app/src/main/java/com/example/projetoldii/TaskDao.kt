@@ -7,16 +7,18 @@ import com.example.projetoldii.data.Task
 import com.example.projetoldii.data.TaskType
 import com.example.projetoldii.data.User
 
+
 @Dao
-interface UserDao {
-    @Query("SELECT * FROM User")
-    suspend fun getAll(): List<User>
+interface UserDao{
 
-    @Insert
-    suspend fun insert(user: User)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertUser(user: User)
 
-    @Delete
-    suspend fun delete(user: User)
+    @Query("SELECT * FROM User WHERE username = :username LIMIT 1")
+    suspend fun getUserByUsername(username: String): User?
+
+    @Query("SELECT * FROM User WHERE email = :email LIMIT 1")
+    suspend fun getUserByEmail(email: String?): User?
 }
 
 @Dao
