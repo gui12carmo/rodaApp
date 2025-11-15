@@ -7,7 +7,6 @@ class RegisterUserUseCase(private val repository: UserRepository) {
         nome: String,
         username: String,
         password: String,
-        email: String?,
-        gestor: Boolean
-    ) = repository.registerUser(nome, username, password, email, gestor)
+        email: String?
+    ) = repository.registerUser(nome, username, password, email)
 }

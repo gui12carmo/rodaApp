@@ -12,7 +12,6 @@ data class User(
     val password: String,
     val email: String?,
     val created_at: Long,
-    val gestor: Boolean
 )
 
 @Entity(

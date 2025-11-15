@@ -40,15 +40,14 @@ class AuthViewModel(
         nome: String,
         username: String,
         password: String,
-        email: String?,
-        gestor: Boolean
+        email: String?
     ) {
         viewModelScope.launch {
             isLoading.value = true
             errorMessage.value = null
             successMessage.value = null
 
-            val result = registerUserUseCase(nome, username, password, email, gestor)
+            val result = registerUserUseCase(nome, username, password, email)
             isLoading.value = false
 
             result.onSuccess {

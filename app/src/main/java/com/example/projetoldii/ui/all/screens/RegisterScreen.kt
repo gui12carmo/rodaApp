@@ -23,7 +23,6 @@ fun RegisterScreen(
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var gestor by remember { mutableStateOf(false) }
 
     LaunchedEffect(success) {
         if (success != null) onRegisterSuccess()
@@ -44,15 +43,10 @@ fun RegisterScreen(
         OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Email (opcional)") })
         OutlinedTextField(value = password, onValueChange = { password = it }, label = { Text("Senha") })
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Checkbox(checked = gestor, onCheckedChange = { gestor = it })
-            Text("Gestor")
-        }
-
         Spacer(Modifier.height(16.dp))
 
         Button(
-            onClick = { viewModel.register(nome, username, password, email.ifEmpty { null }, gestor) },
+            onClick = { viewModel.register(nome, username, password, email.ifEmpty { null }) },
             enabled = !isLoading
         ) {
             Text(if (isLoading) "Criando conta..." else "Registrar")

@@ -11,8 +11,7 @@ class UserRepository(private val userDao: UserDao) {
         nome: String,
         username: String,
         password: String,
-        email: String?,
-        gestor: Boolean
+        email: String?
     ): Result<Boolean> = withContext(Dispatchers.IO) {
         val existingUser = userDao.getUserByUsername(username)
         if (existingUser != null) {
@@ -29,7 +28,6 @@ class UserRepository(private val userDao: UserDao) {
             username = username,
             password = password,
             email = email,
-            gestor = gestor,
             created_at = System.currentTimeMillis()
         )
 
