@@ -32,7 +32,7 @@ fun MainScreen(db: AppDatabase) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("👤 Criar Usuário", style = MaterialTheme.typography.titleLarge)
+        Text("Criar Usuário", style = MaterialTheme.typography.titleLarge)
 
         OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Nome") })
         OutlinedTextField(value = username, onValueChange = { username = it }, label = { Text("Username") })
