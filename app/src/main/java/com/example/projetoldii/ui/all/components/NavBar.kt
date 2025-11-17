@@ -20,6 +20,8 @@ import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,7 +39,7 @@ import com.example.projetoldii.ui.all.PrimaryColor
 enum class UserRole {PROGRAMADOR, GESTOR}
 enum class ProjectNav {LISTA, TIPOS, RELATORIOS}
 
-private data class NavItemCfg(
+/**private data class NavItemCfg(
     val dest: ProjectNav,
     val label: String,
     val icon: ImageVector
@@ -53,68 +55,53 @@ private fun itemsFor(role: UserRole) = when (role) {
         NavItemCfg(ProjectNav.TIPOS, "TIPOS DE TAREFAS", Icons.Outlined.Menu),
         NavItemCfg(ProjectNav.RELATORIOS, "RELATÓRIOS", Icons.Outlined.Share),
         )
-}
+}**/
 
 
 
 @Composable
-fun RoleNavBar(
+fun ProjectNavBar(
     role: UserRole,
     selected: ProjectNav,
     onSelect: (ProjectNav) -> Unit,
-    modifier: Modifier = Modifier
 ) {
-    val items = itemsFor(role)
-    Surface(color = MaterialTheme.colorScheme.surface) {
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-    items.forEach { cfg ->
-        val isSelected = cfg.dest == selected
-        val color: androidx.compose.ui.graphics.Color =
-            if (isSelected) PrimaryColor
-            else Light200
+    val items: List<Triple<ProjectNav, String, ImageVector>> = when (role) {
+        UserRole.PROGRAMADOR -> listOf(
+            Triple(ProjectNav.LISTA, "LISTA", Icons.Outlined.List),
+            Triple(ProjectNav.RELATORIOS, "RELATÓRIOS", Icons.Outlined.Share),
+        )
 
-        Column(
-            modifier = modifier
-                .widthIn(min = 88.dp)
-                .clickable {onSelect(cfg.dest) },
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Icon(cfg.icon, contentDescription = cfg.label, tint = color, modifier = modifier.size(28.dp))
-            Spacer(Modifier.height(6.dp))
-            Text(
-                text = cfg.label,
-                color = color,
-                style = MaterialTheme.typography.labelLarge,
-                textAlign = TextAlign.Center
+        UserRole.GESTOR -> listOf(
+            Triple(ProjectNav.LISTA, "LISTA", Icons.Outlined.List),
+            Triple(ProjectNav.TIPOS, "TIPOS DE TAREFAS", Icons.Outlined.Menu),
+            Triple(ProjectNav.RELATORIOS, "RELATÓRIOS", Icons.Outlined.Share),
+        )
+    }
+
+    NavigationBar {
+        items.forEach { triple ->
+            val dest = triple.first
+            val label = triple.second
+            val icon = triple.third
+
+            NavigationBarItem(
+                selected = dest == selected,
+                onClick = { onSelect(dest) },
+                icon = { Icon(icon, contentDescription = label)},
+                label = { Text(label)}
             )
-        }
     }
-        }
+
     }
+
 }
 
 @Preview(showBackground = true, name = "Programador")
 @Composable
-private fun PreviewNavProgramador() {
-    RoleNavBar(
+private fun PreviewProjectNavBar() {
+    ProjectNavBar(
         role = UserRole.PROGRAMADOR,
         selected = ProjectNav.LISTA,
-        onSelect = {}
-    )
-}
-
-@Preview(showBackground = true, name = "Gestor")
-@Composable
-private fun PreviewNavGestor() {
-    RoleNavBar(
-        role = UserRole.GESTOR,
-        selected = ProjectNav.TIPOS,
         onSelect = {}
     )
 }
