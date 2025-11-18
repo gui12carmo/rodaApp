@@ -33,7 +33,7 @@ fun CardProject(
     Card(onClick = onClick, modifier = modifier, shape = MaterialTheme.shapes.large) {
         Row(Modifier.padding(16.dp), verticalAlignment = Alignment.Top) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text(title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface)
                 InfoRow("Gestor:", managerName)
                 InfoRow("Data Início:", startDate)
             }
@@ -47,8 +47,8 @@ fun CardProject(
 @Composable
 private fun InfoRow(label: String, value: String) {
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(label, color = MaterialTheme.colorScheme.primary)
-        Text(value)
+        Text(label, color = MaterialTheme.colorScheme.outline)
+        Text(value, color = MaterialTheme.colorScheme.tertiary)
     }
 }
 
