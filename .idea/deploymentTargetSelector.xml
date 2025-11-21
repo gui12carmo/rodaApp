@@ -19,13 +19,13 @@
       <SelectionState runConfigName="PreviewCardProject_Manager">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewCardProject_Prog">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="PreviewCardProject_List">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="PreviewProjectNavBarProg">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="PreviewCardTask_List">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

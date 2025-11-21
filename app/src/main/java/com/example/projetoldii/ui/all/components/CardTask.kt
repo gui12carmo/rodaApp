@@ -16,11 +16,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.projetoldii.ui.all.ProjetoLDIITheme
 import java.sql.ClientInfoStatus
 
 sealed interface CardTaskRole{
@@ -51,15 +54,16 @@ fun CardTask(
                     style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
             }
 
-            Spacer(Modifier.height(12.dp))
-            Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(16.dp))
 
             //metadados
             InfoRow("Responsável:", assignee)
             InfoRow("Tipo:", type)
 
             Spacer(Modifier.height(16.dp))
+            Divider(color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
+            Spacer(Modifier.height(8.dp))
+
 
             //Ações por responsabilidade
             when (role) {
@@ -86,5 +90,104 @@ private fun InfoRow(label: String, value: String) {
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(label, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Text(value)
+    }
+}
+
+@Preview(showBackground = false, name = "CardTask - Viewer")
+@Composable
+fun PreviewCardTask_Viewer(){
+    ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
+        Surface() {
+            CardTask(
+                number = 12,
+                title = "Teste",
+                assignee = "gabbi",
+                type = "Bug",
+                role = CardTaskRole.Viewer,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = false, name = "CardTask - Programador")
+@Composable
+fun PreviewCardTask_Prog(){
+    ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
+        Surface() {
+            CardTask(
+                number = 34,
+                title = "Teste",
+                assignee = "gabbi",
+                type = "Bug",
+                role = CardTaskRole.Prog(
+                    onChangeStatus = {}
+                ),
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = false, name = "CardTask - Gestor")
+@Composable
+fun PreviewCardTask_Manager(){
+    ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
+        Surface() {
+            CardTask(
+                number = 12,
+                title = "Teste",
+                assignee = "gabbi",
+                type = "Bug",
+                role = CardTaskRole.Manager(
+                    onChangeStatus = {},
+                    onMoveDown = {},
+                    onMoveUp = {}
+                ),
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = false, name = "CardTask - Lista")
+@Composable
+fun PreviewCardTask_List(){
+    ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
+        Surface() {
+            Column(Modifier.padding(16.dp)) {
+                CardTask(
+                    number = 12,
+                    title = "Teste",
+                    assignee = "gabbi",
+                    type = "Bug",
+                    role = CardTaskRole.Viewer
+                )
+                CardTask(
+                    number = 34,
+                    title = "Teste",
+                    assignee = "gabbi",
+                    type = "Bug",
+                    role = CardTaskRole.Prog(
+                        onChangeStatus = {}
+                    ),
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                )
+                CardTask(
+                    number = 12,
+                    title = "Teste",
+                    assignee = "gabbi",
+                    type = "Bug",
+                    role = CardTaskRole.Manager(
+                        onChangeStatus = {},
+                        onMoveDown = {},
+                        onMoveUp = {}
+                    ),
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                )
+            }
+        }
     }
 }
