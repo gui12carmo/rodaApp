@@ -14,6 +14,7 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.projetoldii.ui.all.ProjetoLDIITheme
 
 sealed interface TopBarVariant {
     data class Home(
@@ -43,7 +44,7 @@ fun AppTopBar(
                 is TopBarVariant.Project -> {
                     variant.onBack?.let { onBack ->
                         IconButton(onClick = onBack) {
-                            Icon(Icons.Outlined.ArrowBack, contentDescription = "Voltar")
+                            Icon(Icons.Outlined.ArrowBack, contentDescription = "Voltar", tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
@@ -58,7 +59,7 @@ fun AppTopBar(
             }
             onLogout?.let {
                 IconButton(onClick = it) {
-                    Icon(Icons.Outlined.ExitToApp, contentDescription = "Sair")
+                    Icon(Icons.Outlined.ExitToApp, contentDescription = "Sair", tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         },
@@ -71,11 +72,13 @@ fun AppTopBar(
 @Preview(showBackground = true, name = "Home TopBar")
 @Composable
 private fun PreviewHomeTopBar() {
-    Surface {
-        AppTopBar(
-            title = "Home",
-            variant = TopBarVariant.Home(onLogout = {})
-        )
+    ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
+        Surface (color = MaterialTheme.colorScheme.background) {
+            AppTopBar(
+                title = "Home",
+                variant = TopBarVariant.Home(onLogout = {})
+            )
+        }
     }
 }
 
@@ -83,10 +86,12 @@ private fun PreviewHomeTopBar() {
 @Preview(showBackground = true, name = "Project TopBar")
 @Composable
 private fun PreviewProjectTopBar() {
-    Surface() {
-        AppTopBar(
-            title = "Nome Projeto",
-            variant = TopBarVariant.Project(onBack = {}, onLogout = {})
-        )
+    ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            AppTopBar(
+                title = "Nome Projeto",
+                variant = TopBarVariant.Project(onBack = {}, onLogout = {})
+            )
+        }
     }
 }

@@ -13,19 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="PreviewProjectNavBarGes">
+      <SelectionState runConfigName="PreviewCardTask_List">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewCardProject_Manager">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="PreviewCardProject_List">
+      <SelectionState runConfigName="PreviewProjectTopBar">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
       <SelectionState runConfigName="PreviewProjectNavBarProg">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="PreviewCardTask_List">
+      <SelectionState runConfigName="PreviewCardProject_List">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="PreviewProjectNavBarGes">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

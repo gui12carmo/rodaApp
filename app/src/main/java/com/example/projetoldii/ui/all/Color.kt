@@ -27,20 +27,3 @@ val Light100 = Color(0xFFCFD8DC)
 val Light50 = Color(0xFFECEFF1)
 val Light0 = Color(0xFFFFFFFF)
 val Grey900 = Color(0x1F263238)
-
-// “on” colors (texto/ícones sobre superfícies)
-val OnPrimary = Light0
-val OnBg_Light = Dark900
-val OnBg_Dark  = Light0
-val OnSurface_Light = Dark900
-val OnSurface_Dark  = Light0
-
-// Surfaces
-val Surface_Light = Light0
-val Surface_Dark  = Color(0xFF1E1E1E)
-
-// SurfaceVariant (chips/divisores)
-val SurfaceVariant_Light = Light50
-val OnSurfaceVariant_Light = Mid500
-val SurfaceVariant_Dark = Dark800
-val OnSurfaceVariant_Dark = Light200

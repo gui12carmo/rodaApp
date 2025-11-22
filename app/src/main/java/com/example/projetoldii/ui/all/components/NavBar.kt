@@ -18,9 +18,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Analytics
+import androidx.compose.material.icons.outlined.Discount
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material.icons.outlined.StackedBarChart
+import androidx.compose.material.icons.outlined.ViewKanban
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -58,9 +62,9 @@ fun ProjectNavBar(
         )
 
         UserRole.GESTOR -> listOf(
-            Triple(ProjectNav.LISTA, "LISTA", Icons.Outlined.List),
-            Triple(ProjectNav.TIPOS, "TIPOS DE TAREFAS", Icons.Outlined.Menu),
-            Triple(ProjectNav.RELATORIOS, "RELATÓRIOS", Icons.Outlined.Share),
+            Triple(ProjectNav.LISTA, "LISTA", Icons.Outlined.ViewKanban),
+            Triple(ProjectNav.TIPOS, "TIPOS DE TAREFAS", Icons.Outlined.Discount),
+            Triple(ProjectNav.RELATORIOS, "RELATÓRIOS", Icons.Outlined.Analytics),
         )
     }
 
