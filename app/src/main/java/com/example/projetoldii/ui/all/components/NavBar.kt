@@ -1,5 +1,7 @@
 package com.example.projetoldii.ui.all.components
 
+import com.example.projetoldii.ui.all.viewmodels.UserRole
+
 import android.R
 import android.graphics.Color
 import android.graphics.drawable.Icon
@@ -45,7 +47,7 @@ import com.example.projetoldii.ui.all.Primary12
 import com.example.projetoldii.ui.all.PrimaryColor
 import com.example.projetoldii.ui.all.ProjetoLDIITheme
 
-enum class UserRole {PROGRAMADOR, GESTOR}
+
 enum class ProjectNav {LISTA, TIPOS, RELATORIOS}
 
 
