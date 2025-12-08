@@ -10,6 +10,7 @@ import com.example.projetoldii.data.AppDatabase
 import com.example.projetoldii.domain.usecases.LoginUserUseCase
 import com.example.projetoldii.domain.usecases.RegisterUserUseCase
 import com.example.projetoldii.repository.UserRepository
+import com.example.projetoldii.ui.all.ProjetoLDIITheme
 import com.example.projetoldii.ui.navigation.AppNavigation
 import com.example.projetoldii.ui.viewmodels.AuthViewModel
 
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            MaterialTheme {
+            ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
                 Surface {
                     // Chamamos o sistema de navegação
                     AppNavigation(authViewModel)
