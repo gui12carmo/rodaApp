@@ -38,13 +38,20 @@ fun LoginScreen(
     val success by viewModel.successMessage
     val currentUser by viewModel.currentUser
 
-    var identifier by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
 
     LaunchedEffect(currentUser) {
         currentUser?.let { onLoginSuccess(it) }
+    }
+
+    DisposableEffect(Unit) {
+        viewModel.clearMessages()
+        onDispose {
+            viewModel.clearMessages()
+        }
     }
 
     Box(
@@ -66,12 +73,12 @@ fun LoginScreen(
                     .size(250.dp)
             )
 
-            Text(
-                text = "O ciclo de planejamento que seu projeto precisa",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                textAlign = TextAlign.Center,
-            )
+//            Text(
+//                text = "O ciclo de planejamento que seu projeto precisa",
+//                style = MaterialTheme.typography.bodyMedium,
+//                color = MaterialTheme.colorScheme.onSurfaceVariant,
+//                textAlign = TextAlign.Center,
+//            )
 
 
             Spacer(Modifier.height(8.dp))
@@ -86,8 +93,8 @@ fun LoginScreen(
             Spacer(Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = identifier,
-                onValueChange = { identifier = it },
+                value = username,
+                onValueChange = { username = it },
                 singleLine = true,
                 label = { Text("Username") },
                 modifier = Modifier.fillMaxWidth(),
@@ -118,7 +125,7 @@ fun LoginScreen(
             Spacer(Modifier.height(32.dp))
 
             Button(
-                onClick = { viewModel.login(identifier, password) },
+                onClick = { viewModel.login(username, password) },
                 shape = RoundedCornerShape(4.dp),
                 enabled = !isLoading,
                 modifier = Modifier

@@ -13,7 +13,7 @@ import com.example.projetoldii.UserDao
     version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun UserDao(): UserDao
+    abstract fun userDao(): UserDao
     abstract fun projectDao(): ProjectDao
     abstract fun taskTypeDao(): TaskTypeDao
     abstract fun taskDao(): TaskDao

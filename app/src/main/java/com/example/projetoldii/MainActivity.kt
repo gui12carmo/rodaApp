@@ -3,36 +3,35 @@ package com.example.projetoldii
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.*
-import androidx.compose.ui.Modifier
-import com.example.projetoldii.data.AppDatabase
+import androidx.activity.viewModels                // <- IMPORTA O DELEGATE "by viewModels"
+import androidx.compose.material3.Surface
 import com.example.projetoldii.domain.usecases.LoginUserUseCase
 import com.example.projetoldii.domain.usecases.RegisterUserUseCase
 import com.example.projetoldii.repository.UserRepository
 import com.example.projetoldii.ui.all.ProjetoLDIITheme
 import com.example.projetoldii.ui.navigation.AppNavigation
 import com.example.projetoldii.ui.viewmodels.AuthViewModel
+import com.example.projetoldii.ui.all.viewmodels.AuthViewModelFactory
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        // Obtém a instância do banco local (Room)
-        val db = DatabaseProvider.getDatabase(this)
-        val userRepository = UserRepository(db.UserDao())
+    private val db by lazy { DatabaseProvider.getDatabase(this) }
+    private val userRepository by lazy { UserRepository(db.userDao()) }
 
-        // Cria o ViewModel principal de autenticação
-        val authViewModel = AuthViewModel(
+    private val authViewModel: AuthViewModel by viewModels {
+        AuthViewModelFactory(
             loginUserUseCase = LoginUserUseCase(userRepository),
             registerUserUseCase = RegisterUserUseCase(userRepository)
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         setContent {
             ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
                 Surface {
-                    // Chamamos o sistema de navegação
-                    AppNavigation(authViewModel)
+                    AppNavigation(authViewModel = authViewModel)
                 }
             }
         }

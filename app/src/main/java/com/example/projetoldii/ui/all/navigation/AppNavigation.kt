@@ -27,6 +27,7 @@ fun AppNavigation(authViewModel: AuthViewModel) {
                 onLoginSuccess = { user ->
                     navController.navigate(Screen.Main.route) {
                         popUpTo(Screen.Login.route) { inclusive = true }
+                        launchSingleTop = true
                     }
                 },
                 onNavigateToRegister = {
@@ -41,7 +42,11 @@ fun AppNavigation(authViewModel: AuthViewModel) {
                 onRegisterSuccess = {
                     navController.navigate(Screen.Login.route) {
                         popUpTo(Screen.Register.route) { inclusive = true }
+                        launchSingleTop = true
                     }
+                    },
+                onNavigateToLogin = {
+                    navController.navigate(Screen.Login.route)
                 }
             )
         }
