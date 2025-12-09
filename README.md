@@ -1,49 +1,51 @@
 # RodaApp
 
-"Breve descrição"
+Aplicativo mobile de **gestão de tarefas, projetos e Kanban**, desenvolvido por **Thales Pires, Guilherme Carmo e Maria Rezende**.  
+O RodaApp permite organizar projetos, acompanhar progresso em tempo real e gerir tarefas de forma colaborativa, incluindo sistema de papéis, atribuição de tarefas e relatórios detalhados.
 
 ## :camera_flash: Screenshots
-<!-- You can add more screenshots here if you like -->
+<!-- Você pode adicionar mais screenshots aqui -->
 <img src="" width="200">
 <img src="" width="200">
 
-## Tecnologias
+## ✨ Funcionalidades
+
+- ✔️ **TO-DO List completa**
+- ✔️ **Kanban com colunas personalizáveis**
+- ✔️ **Projetos com descrição, datas e responsáveis**
+- ✔️ **Papel de Gestor**
+  - Pode criar projetos  
+  - Atribui tarefas para programadores  
+  - Controla prazos e progresso  
+- ✔️ **Sistema de tarefas**
+  - Datas de início e fim  
+  - Responsável atribuído  
+  - Status (Pendente, Em Progresso, Concluída)
+- ✔️ **Relatórios automáticos do projeto**
+  - Histórico de tarefas  
+  - Responsáveis  
+  - Tarefas concluídas vs pendentes  
+  - Tempo estimado x tempo real  
+- ✔️ **Interface simples e intuitiva**
+
+## 👨‍💻 Tecnologias
+
 ![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white)
 ![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/Kotlin-%237F52FF.svg?logo=kotlin&logoColor=white)
 
-- AppCompatActivity
-- Button
-- TextInputEditText
-- Intent
-- AppCompatActivity
-- TextView
-- ConstraintLayout
-- LinearLayout
-- ImageView
-- TextInputLayout
+- AppCompatActivity  
+- Button  
+- TextInputEditText  
+- Intent  
+- TextView  
+- ConstraintLayout  
+- LinearLayout  
+- ImageView  
+- TextInputLayout  
 
+## 👥 Colaboradores
 
-## License
-```
-The MIT License (MIT)
-
-Copyright (c) 2025 Guilherme Vicente França do Carmo
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the "Software"), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-the Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-```
+- **Thales Pires** 
+- **Guilherme Carmo** 
+- **Maria Rezende**  
