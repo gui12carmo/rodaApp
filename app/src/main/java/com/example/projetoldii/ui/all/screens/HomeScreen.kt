@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
@@ -33,13 +35,17 @@ fun HomeScreen(
     uiState: HomeUiState,
     onOpenProject: (projectId: Int) -> Unit,
     onCreateProject: () -> Unit,
-    onLogout: () -> Unit
+    onLogoutClick: () -> Unit,
+    onConfirmLogout: () -> Unit,
+    onDismissLogout: () -> Unit,
+    onCreate: () -> Unit
+
 ) {
     Scaffold(
         topBar = {
             AppTopBar(
                 title = "Home",
-                variant = TopBarVariant.Home(onLogout = onLogout)
+                variant = TopBarVariant.Home(onLogout = onLogoutClick)
             )
         }
     ) { padding ->
@@ -83,12 +89,33 @@ fun HomeScreen(
                             isManager = item.isManager,
                             onClick = { onOpenProject(item.id) }
                         )
+                        Button(
+                            onClick = onCreate,
+                            shape = MaterialTheme.shapes.large
+                        ) {
+                            Text("+ CRIAR PROJETO")
+                        }
                     }
                 }
             }
         }
     }
+
+    if (uiState.showLogoutDialog) {
+        AlertDialog(
+            onDismissRequest = onDismissLogout,
+            title = { Text("Deseja sair?") },
+            text  = { Text("Tem certeza que quer desligar da sua conta?") },
+            confirmButton = {
+                TextButton(onClick = onConfirmLogout) { Text("SIM") }
+            },
+            dismissButton = {
+                TextButton(onClick = onDismissLogout) { Text("NÃO") }
+            }
+        )
+    }
 }
+
 
 @Composable
 private fun EmptyProjects(

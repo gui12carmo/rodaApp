@@ -8,6 +8,7 @@ import com.example.projetoldii.repository.ProjectRepository
 import com.example.projetoldii.ui.all.screens.HomeScreen
 import com.example.projetoldii.ui.all.viewmodels.HomeUiState
 import com.example.projetoldii.ui.all.viewmodels.ProjectsViewModel
+import com.example.projetoldii.ui.all.viewmodels.ProjectsViewModelFactory
 
 @Composable
 fun HomeRoute(
@@ -18,7 +19,7 @@ fun HomeRoute(
     onLogout: () -> Unit
 ) {
     val vm: ProjectsViewModel = viewModel(
-        factory = ProjectsViewModel.ProjectsViewModelFactory(
+        factory = ProjectsViewModelFactory(
             observeProjects = ObserveUserProjectUseCase(projectRepository),
             userId = currentUserId
         )
@@ -31,6 +32,12 @@ fun HomeRoute(
         uiState = HomeUiState.value,
         onOpenProject = onOpenProject,
         onCreateProject = onCreateProject,
-        onLogout = onLogout
+        onLogoutClick = vm::requestLogout,
+        onConfirmLogout = {
+            vm.dismissLogout()
+            onLogout()
+        },
+        onDismissLogout = vm::dismissLogout,
+        onCreate = onCreateProject
     )
 }

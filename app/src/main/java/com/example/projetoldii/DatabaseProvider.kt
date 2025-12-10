@@ -12,9 +12,9 @@ object DatabaseProvider {
             db = Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
-                "todo_database"
+                "roda.db"
             )
-                .fallbackToDestructiveMigration() // 🔥 Apaga e recria automaticamente se houver mudança
+                .addMigrations(AppDatabase.MIGRATION_2_3) // 🔥
                 .build()
         }
         return db!!

@@ -32,8 +32,8 @@ interface ProjectDao {
     @Query("SELECT * FROM Project WHERE id_projeto IN (:ids)")
     fun observeByIds(ids: List<Int>): kotlinx.coroutines.flow.Flow<List<Project>>
 
-    @Insert
-    suspend fun insert(project: Project)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insert(project: Project): Long
 
     @Update
     suspend fun update(project: Project)

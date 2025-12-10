@@ -7,6 +7,7 @@ import androidx.activity.viewModels                // <- IMPORTA O DELEGATE "by 
 import androidx.compose.material3.Surface
 import com.example.projetoldii.domain.usecases.LoginUserUseCase
 import com.example.projetoldii.domain.usecases.RegisterUserUseCase
+import com.example.projetoldii.repository.ProjectRepository
 import com.example.projetoldii.repository.UserRepository
 import com.example.projetoldii.ui.all.ProjetoLDIITheme
 import com.example.projetoldii.ui.navigation.AppNavigation
@@ -28,10 +29,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // MainActivity.onCreate (exemplo)
+        val db = DatabaseProvider.getDatabase(this)
+        val projectRepo = ProjectRepository(
+            projectDao = db.projectDao(),
+            addProgrammerDao = db.addProgrammerDao()
+        )
+
+
         setContent {
             ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
                 Surface {
-                    AppNavigation(authViewModel = authViewModel)
+                    AppNavigation(authViewModel = authViewModel, projectRepo = projectRepo)
                 }
             }
         }

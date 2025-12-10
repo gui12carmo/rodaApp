@@ -32,7 +32,8 @@ data class ProjectListItem(
 data class HomeUiState(
     val loading: Boolean = false,
     val error: String? = null,
-    val items: List<ProjectListItem> = emptyList()
+    val items: List<ProjectListItem> = emptyList(),
+    val showLogoutDialog: Boolean = false
 )
 
 class ProjectsViewModel(
@@ -66,6 +67,11 @@ class ProjectsViewModel(
         }
     }
 
+    fun requestLogout() { _uiState.update { it.copy(showLogoutDialog = true) } }
+    fun dismissLogout() { _uiState.update { it.copy(showLogoutDialog = false) } }
+}
+
+
     private fun formatDateOrDash(millis: Long?): String {
         if (millis == null || millis == 0L) return "--/--/----"
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -83,4 +89,3 @@ class ProjectsViewModel(
 
         }
     }
-}

@@ -30,7 +30,8 @@ data class Project(
     val nome: String,
     val descricao: String?,
     val id_owner: Int,
-    val created_at: Long
+    val created_at: Long,
+    val dt_prevista_fim: Long?,
 )
 
 @Entity(
