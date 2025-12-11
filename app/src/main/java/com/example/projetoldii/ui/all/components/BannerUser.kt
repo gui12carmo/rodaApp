@@ -15,7 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projetoldii.ui.all.ProjetoLDIITheme
-import com.example.projetoldii.ui.all.viewmodels.UserRole   // 👈 usa o enum certo
+import com.example.projetoldii.ui.all.viewmodels.UserRole
+
 
 @Composable
 fun BannerUser(

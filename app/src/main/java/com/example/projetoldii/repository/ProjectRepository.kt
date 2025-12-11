@@ -20,6 +20,26 @@ class ProjectRepository(
     private val addProgrammerDao: AddProgrammerDao
 ) {
 
+    fun observeProjectWithRole(projectId: Int, userId: Int): Flow<ProjectWhithRole?> {
+        val projectFlow = projectDao.observeById(projectId)
+        val isMemberFlow = addProgrammerDao
+            .observeMembershipCount(projectId, userId)
+            .map { it > 0}
+
+        return combine(projectFlow, isMemberFlow) { project, isMember ->
+            if (project == null) {
+                null
+            } else {
+                val role = when {
+                    project.id_owner == userId -> UserRole.GESTOR
+                    isMember                   -> UserRole.PROGRAMADOR
+                    else                       -> UserRole.PROGRAMADOR
+                }
+                ProjectWhithRole(project, role)
+            }
+        }
+    }
+
     /**
      * Cria um novo projeto para o owner informado.
      * Regras:

@@ -9,11 +9,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.projetoldii.DatabaseProvider
 import com.example.projetoldii.repository.ProjectRepository
+import com.example.projetoldii.repository.TaskRepository
 import com.example.projetoldii.ui.all.screens.LoginScreen
 import com.example.projetoldii.ui.all.screens.RegisterScreen
 import com.example.projetoldii.ui.all.MainScreen
 import com.example.projetoldii.ui.all.routes.HomeRoute
 import com.example.projetoldii.ui.all.routes.ProjectFormRoute
+import com.example.projetoldii.ui.all.routes.ProjectKanBanRoute
 import com.example.projetoldii.ui.viewmodels.AuthViewModel
 
 sealed class Screen(val route: String) {
@@ -21,10 +23,13 @@ sealed class Screen(val route: String) {
     object Register : Screen("register")
     object Home : Screen("Home")
     object CreateProject : Screen("createProject")
+    object ProjectKanBan : Screen("project/{id}"){
+        fun routeOf(id: Int) = "project/$id"
+    }
 }
 
 @Composable
-fun AppNavigation(authViewModel: AuthViewModel, projectRepo: ProjectRepository) {
+fun AppNavigation(authViewModel: AuthViewModel, projectRepo: ProjectRepository, taskRepo: TaskRepository) {
     val navController: NavHostController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.Login.route) {
@@ -75,31 +80,17 @@ fun AppNavigation(authViewModel: AuthViewModel, projectRepo: ProjectRepository) 
             )
         }
 
-//        composable(Screen.Home.route) {
-//            val context = LocalContext.current
-//            val db = DatabaseProvider.getDatabase(context)
-//
-//            // Repositório para a Home (Room local)
-//            val projectRepo = ProjectRepository(
-//                projectDao = db.projectDao(),
-//                addProgrammerDao = db.addProgrammerDao()
-//            )
-//
-//            // Se por algum motivo chegarmos aqui sem user logado, volta pro Login
-//            val user = authViewModel.currentUser.value
-//            if (user == null) {
-//                navController.navigate(Screen.Login.route) {
-//                    popUpTo(0) { inclusive = true }
-//                }
-//                return@composable
-//            }
-//
-//        }
-//
-//        composable(Screen.CreateProject.route) {
-//            val user = authViewModel.currentUser.value!!
-//
-//        }
+        composable(Screen.ProjectKanBan.route) { backStackEntry ->
+            ProjectKanBanEntry(
+                authViewModel = authViewModel,
+                projectRepo = projectRepo,
+                navController = navController,
+                taskRepo = taskRepo,
+                projectId = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: return@composable
+            )
+        }
+
+
     }
 }
 
@@ -126,8 +117,7 @@ private fun HomeEntry(
             currentUserId = user.id_user,
             onOpenProject = { projectId ->
                 // TODO: nav para a tela do projeto
-                // navController.navigate("project/$projectId")
-                // Screen.Project("project/{id}") + navController.navigate("project/$projectId")
+                navController.navigate(Screen.ProjectKanBan.routeOf(projectId))
             },
             onCreateProject = {
                 navController.navigate(Screen.CreateProject.route)
@@ -170,4 +160,43 @@ private fun CreateProjectEntry(
         },
         onCancelNav = { navController.popBackStack() }       // cancelar -> volta pra Home
     )
+}
+
+@Composable
+private fun ProjectKanBanEntry(
+    authViewModel: AuthViewModel,
+    projectRepo: ProjectRepository,
+    taskRepo: TaskRepository,
+    navController: NavHostController,
+    projectId: Int
+) {
+    val user = authViewModel.currentUser.value
+
+    // Guard: se deslogar, volta 1x pro Login
+    LaunchedEffect(user) {
+        if (user == null) {
+            navController.navigate(Screen.Login.route) {
+                popUpTo(0) { inclusive = true }
+                launchSingleTop = true
+            }
+        }
+    }
+    if (user == null) return
+
+    // Chame aqui sua Route do Kanban quando criá-la:
+    ProjectKanBanRoute (
+         projectRepository = projectRepo,
+         currentUserId = user.id_user,
+         currentUserName = user.nome,
+         projectId = projectId,
+         taskRepository = taskRepo,
+         onBack = { navController.popBackStack() },
+         onLogout = { authViewModel.currentUser.value = null },
+         onOpenTaskDetail = { taskId -> /* nav p/ detalhe, quando existir */ },
+         onCreateTask = { /* nav para form de task */ },
+         onCreateTaskType = { /* nav para form de tipo */ },
+         onAddProgrammer = { /* nav para form de adicionar programador */ }
+    )
+
+    // Enquanto a Route não estiver pronta, você pode deixar um TODO/placeholder aqui.
 }
