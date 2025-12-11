@@ -17,13 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.projetoldii.ui.all.ProjetoLDIITheme
+import com.example.projetoldii.ui.all.viewmodels.UserRole
 
-enum class ProjectRole {Gestor, Programador }
 
 @Composable
 fun BannerUser(
     userName: String,
-    role: ProjectRole,
+    role: UserRole,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -61,6 +61,7 @@ fun BannerUserPreview() {
     ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
         BannerUser(
             userName = "João Silva",
-            role = ProjectRole.Gestor)
+            role = UserRole.GESTOR
+        )
     }
 }
