@@ -1,4 +1,4 @@
-package com.example.projetoldii.viewmodels
+package com.example.projetoldii.ui.all.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

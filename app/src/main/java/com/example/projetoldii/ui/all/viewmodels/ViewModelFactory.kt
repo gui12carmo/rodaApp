@@ -3,12 +3,11 @@ package com.example.projetoldii.ui.all.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.projetoldii.TaskDao
-import com.example.projetoldii.viewmodels.ProgrammerReportViewModel
 
 class ProgrammerReportViewModelFactory(
     private val taskDao: TaskDao,
     private val userId: Int,
-    private val projectId: Int       // 👈 novo parâmetro
+    private val projectId: Int
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -17,7 +16,7 @@ class ProgrammerReportViewModelFactory(
             return ProgrammerReportViewModel(
                 taskDao = taskDao,
                 userId = userId,
-                projectId = projectId    // 👈 agora passamos o projectId
+                projectId = projectId
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

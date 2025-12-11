@@ -17,11 +17,11 @@ import com.example.projetoldii.ui.all.components.BannerUser
 import com.example.projetoldii.ui.all.components.ProjectNav
 import com.example.projetoldii.ui.all.components.ProjectNavBar
 import com.example.projetoldii.ui.all.components.TopBarVariant
+import com.example.projetoldii.ui.all.viewmodels.ProgrammerReportItem
+import com.example.projetoldii.ui.all.viewmodels.ProgrammerReportViewModel
 import com.example.projetoldii.ui.all.viewmodels.UserRole
-import com.example.projetoldii.viewmodels.ProgrammerReportItem
-import com.example.projetoldii.viewmodels.ProgrammerReportViewModel
 
-// ---------- TELA REAL (usando ViewModel) ----------
+// ---------- TELA REAL (usa ViewModel e dados do banco) ----------
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,6 +32,7 @@ fun ProgrammerReportScreen(
     onBack: () -> Unit,
     onNavigateToList: () -> Unit,
 ) {
+    // coleta a lista de itens calculada pelo ViewModel (expectedDays / deliveredDays)
     val items by viewModel.items.collectAsState()
 
     ProgrammerReportContent(
@@ -68,7 +69,7 @@ private fun ProgrammerReportContent(
                 onSelect = { nav ->
                     when (nav) {
                         ProjectNav.LISTA -> onNavigateToList()
-                        ProjectNav.RELATORIOS -> Unit
+                        ProjectNav.RELATORIOS -> Unit // já está nessa tela
                         else -> Unit
                     }
                 }
@@ -80,6 +81,7 @@ private fun ProgrammerReportContent(
                 .padding(paddingValues)
                 .padding(horizontal = 16.dp, vertical = 8.dp)
         ) {
+            // Banner com nome do programador (igual ao layout)
             BannerUser(
                 userName = programmerName,
                 role = UserRole.PROGRAMADOR
@@ -111,7 +113,7 @@ private fun ProgrammerReportContent(
     }
 }
 
-// ---------- CARD SIMPLES PARA A TELA DO PROGRAMADOR ----------
+// ---------- CARD DE CADA TAREFA (layout do anexo 1) ----------
 
 @Composable
 private fun ProgrammerReportCard(item: ProgrammerReportItem) {
@@ -129,23 +131,28 @@ private fun ProgrammerReportCard(item: ProgrammerReportItem) {
             Column(
                 modifier = Modifier.weight(1f)
             ) {
+                // Nome da tarefa
                 Text(
                     text = item.title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(Modifier.height(4.dp))
+                // Tempo previsto
                 Text(
                     text = "TEMPO PREVISTO: ${item.expectedDays} DIAS",
                     style = MaterialTheme.typography.bodySmall
                 )
             }
 
-            Column(horizontalAlignment = androidx.compose.ui.Alignment.End) {
+            Column(
+                horizontalAlignment = androidx.compose.ui.Alignment.End
+            ) {
                 Text(
                     text = "ENTREGUE EM:",
                     style = MaterialTheme.typography.labelSmall
                 )
+                // Tempo REAL calculado (dias que levou para chegar em DONE)
                 Text(
                     text = "${item.deliveredDays} DIAS",
                     style = MaterialTheme.typography.bodyMedium,
@@ -156,7 +163,7 @@ private fun ProgrammerReportCard(item: ProgrammerReportItem) {
     }
 }
 
-// ---------- PREVIEW ----------
+// ---------- PREVIEW (pra você ver a tela inteira) ----------
 
 @Preview(showBackground = true, name = "Relatório Programador")
 @Composable
@@ -170,12 +177,12 @@ private fun ProgrammerReportPreview() {
         ProgrammerReportItem(
             title = "Nome da Task",
             expectedDays = 4,
-            deliveredDays = 5
+            deliveredDays = 3
         ),
         ProgrammerReportItem(
             title = "Nome da Task",
             expectedDays = 4,
-            deliveredDays = 5
+            deliveredDays = 4
         )
     )
 
