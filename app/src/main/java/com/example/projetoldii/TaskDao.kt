@@ -6,6 +6,7 @@ import com.example.projetoldii.data.Project
 import com.example.projetoldii.data.Task
 import com.example.projetoldii.data.TaskType
 import com.example.projetoldii.data.User
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -47,9 +48,34 @@ interface ProjectDao {
 
 @Dao
 interface TaskDao {
-    @Insert suspend fun insert(task: Task)
+
+    @Insert
+    suspend fun insert(task: Task)
+
     @Query("SELECT * FROM Task WHERE id_projeto = :projectId")
     suspend fun getByProject(projectId: Int): List<Task>
+
+    // 🔹 Método antigo, usado pelo TaskRepository (NÃO remover)
+    @Query("""
+        SELECT * FROM Task
+        WHERE id_programador = :userId
+          AND status = 'DONE'
+        ORDER BY dt_real_fim ASC
+    """)
+    fun getCompletedTasks(userId: Int): kotlinx.coroutines.flow.Flow<List<Task>>
+
+    // 🔹 Método novo, que usamos no relatório (programador + projeto)
+    @Query("""
+        SELECT * FROM Task
+        WHERE id_programador = :userId
+          AND id_projeto    = :projectId
+          AND status        = 'DONE'
+        ORDER BY dt_real_fim ASC
+    """)
+    fun observeCompletedTasksForProgrammer(
+        userId: Int,
+        projectId: Int
+    ): kotlinx.coroutines.flow.Flow<List<Task>>
 }
 
 @Dao
