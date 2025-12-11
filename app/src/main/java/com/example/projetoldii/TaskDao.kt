@@ -24,6 +24,10 @@ interface UserDao{
 
 @Dao
 interface ProjectDao {
+
+    @Query("SELECT * FROM project WHERE id_projeto = :id LIMIT 1")
+    fun getById(id: Int): Project?
+
     @Query("SELECT * FROM Project")
     suspend fun getAll(): List<Project>
 
@@ -112,6 +116,31 @@ interface AddProgrammerDao {
 
     @Query("""SELECT COUNT(*) FROM AddProgrammer WHERE id_projeto = :projectId AND id_programador = :userId""")
     fun observeMembershipCount(projectId: Int, userId: Int): Flow<Int>
-}
 
+    @Query("""
+        SELECT 
+            ap.id                       AS id,
+            u.id_user                   AS userId,
+            u.username                  AS username,
+            u.nome                      AS nome,
+            ap.nivel_experiencia        AS nivel,
+            ap.departamento             AS departamento,
+            ap.added_at                 AS addedAt
+        FROM AddProgrammer ap
+        INNER JOIN User u ON u.id_user = ap.id_programador
+        WHERE ap.id_projeto = :projectId
+        ORDER BY u.nome COLLATE NOCASE
+    """)
+    fun observeProgrammersInProject(projectId: Int): kotlinx.coroutines.flow.Flow<List<ProgrammerRow>>
+}
+// DTO para o resultado do JOIN
+data class ProgrammerRow(
+    val id: Int,
+    val userId: Int,
+    val username: String,
+    val nome: String,
+    val nivel: String?,
+    val departamento: String?,
+    val addedAt: Long
+)
 
