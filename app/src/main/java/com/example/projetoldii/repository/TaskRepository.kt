@@ -16,7 +16,8 @@ data class BoardColumn(
 class TaskRepository(
     private val taskDao: TaskDao,
     private val taskTypeDao: TaskTypeDao,
-    private val addProgrammerDao: AddProgrammerDao
+    private val addProgrammerDao: AddProgrammerDao,
+    val moveTask: Any
 ) {
     fun observeCompletedTasks(userId: Int): Flow<List<Task>> {
         return taskDao.getCompletedTasks(userId)
@@ -39,4 +40,7 @@ class TaskRepository(
         val updated = task.copy(id_tipoTarefa = toTypeId)
         taskDao.update(updated)
     }
+
+    }
 }
+

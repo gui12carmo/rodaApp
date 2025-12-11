@@ -8,7 +8,11 @@ import com.example.projetoldii.data.TaskType
 import com.example.projetoldii.data.User
 import kotlinx.coroutines.flow.Flow
 
-
+data class TaskWithProgrammer(
+    @Embedded val task: Task,
+    @ColumnInfo(name = "programmerName")
+    val programmerName: String?
+)
 @Dao
 interface UserDao{
 
@@ -92,7 +96,20 @@ interface TaskDao {
         userId: Int,
         projectId: Int
     ): kotlinx.coroutines.flow.Flow<List<Task>>
+
+    @Query("""
+        SELECT Task.*, User.nome AS programmerName
+        FROM Task
+        LEFT JOIN User ON Task.id_programador = User.id_user
+        WHERE Task.id_projeto = :projectId
+          AND Task.status = 'DONE'
+        ORDER BY Task.dt_real_fim ASC
+    """)
+    fun observeCompletedTasksForProject(
+        projectId: Int
+    ): kotlinx.coroutines.flow.Flow<List<TaskWithProgrammer>>
 }
+
 
 @Dao
 interface TaskTypeDao {
