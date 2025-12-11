@@ -12,7 +12,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.projetoldii.domain.usecases.model.TaskState
 import com.example.projetoldii.ui.all.components.*
+import com.example.projetoldii.ui.all.routes.TaskTypeListRoute
 import com.example.projetoldii.ui.all.viewmodels.ProjectKanBanUiState
 import com.example.projetoldii.ui.all.viewmodels.TaskUi
 import com.example.projetoldii.ui.all.viewmodels.UserRole
@@ -25,12 +27,14 @@ fun ProjectKanBanScreen(
     onLogout: () -> Unit,
     onConfirmLogout: () -> Unit,
     onDismissLogout: () -> Unit,
-    onToggleColumn: (typeId: Int) -> Unit,
-    onMoveTask: (TaskUi, toTypeId: Int) -> Unit,
+    onToggleColumn: (TaskState) -> Unit,
+    onMoveTask: (TaskUi, TaskState) -> Unit,
     onOpenTaskDetail: (taskId: Int) -> Unit,
     onCreateTask: () -> Unit,
     onCreateTaskType: () -> Unit,
-    onAddProgrammer: () -> Unit
+    onAddProgrammer: () -> Unit,
+    typesTab: @Composable () -> Unit = {},
+    reportersTab: @Composable () -> Unit = {}
 ) {
     val ProjectRole = remember(state.role) { state.role }
 
@@ -93,7 +97,7 @@ fun ProjectKanBanScreen(
                         contentPadding = PaddingValues(16.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        items(state.columns, key = { it.typeId }) { col ->
+                        items(state.columns, key = { it.state }) { col ->
                             Column(Modifier.fillMaxWidth()) {
                                 Row(
                                     Modifier
@@ -106,7 +110,7 @@ fun ProjectKanBanScreen(
                                         "${col.title} (${col.count})",
                                         style = MaterialTheme.typography.titleMedium
                                     )
-                                    IconButton(onClick = { onToggleColumn(col.typeId) }) {
+                                    IconButton(onClick = { onToggleColumn(col.state) }) {
                                         Icon(
                                             if (col.expanded) Icons.Outlined.ArrowDropDown else Icons.Outlined.ArrowRight,
                                             contentDescription = null
@@ -128,12 +132,14 @@ fun ProjectKanBanScreen(
                                                     when (ProjectRole) {
                                                         UserRole.PROGRAMADOR -> CardTaskRole.Prog(
                                                             onChangeStatus = {
-                                                                onMoveTask(t, t.statusTypeId)
+                                                                // por enquanto move para o MESMO estado da coluna
+                                                                // TODO (depois você abre um picker para escolher o novo estado)
+                                                                onMoveTask(t, col.state)
                                                             }
                                                         )
                                                         UserRole.GESTOR -> CardTaskRole.Manager(
                                                             onChangeStatus = {
-                                                                onMoveTask(t, t.statusTypeId)
+                                                                onMoveTask(t, col.state)
                                                             },
                                                             onMoveUp = { /* TODO mover p/ cima */ },
                                                             onMoveDown = { /* TODO mover p/ baixo */ }
@@ -160,13 +166,14 @@ fun ProjectKanBanScreen(
 
                 ProjectNav.TIPOS -> {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text("Tipos de tarefa (em breve)")
+                        typesTab()
                     }
                 }
 
                 ProjectNav.RELATORIOS -> {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text("Relatórios (em breve)")
+                        //reportersTab()
                     }
                 }
             }

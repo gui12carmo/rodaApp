@@ -1,5 +1,4 @@
 package com.example.projetoldii.ui.all.components
-import com.example.projetoldii.ui.all.viewmodels.TaskState
 import com.example.projetoldii.ui.all.viewmodels.UserRole
 import com.example.projetoldii.ui.all.viewmodels.Departamento
 import com.example.projetoldii.ui.all.viewmodels.NivelExperiencia
@@ -14,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.projetoldii.domain.usecases.model.TaskState
 import com.example.projetoldii.ui.all.ProjetoLDIITheme
 
 

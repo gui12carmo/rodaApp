@@ -64,6 +64,10 @@ interface TaskDao {
     @Update
     suspend fun update(task: Task)
 
+    @Query("UPDATE Task SET status = :newStatus WHERE id_tarefa = :taskId")
+    suspend fun updateStatus(taskId: Int, newStatus: String)
+
+
     // POJO para contadores
     data class TypeCount(val typeId: Int?, val total: Int)
 
@@ -74,7 +78,21 @@ interface TaskDao {
 
 @Dao
 interface TaskTypeDao {
-    @Insert suspend fun insert(taskType: TaskType)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insert(taskType: TaskType): Long
+
+    @Update
+    suspend fun update(taskType: TaskType)
+
+    @Delete
+    suspend fun delete(taskType: TaskType)
+
+    @Query("SELECT * FROM TaskType WHERE id_tipoTarefa = :id LIMIT 1")
+    suspend fun getById(id: Int): TaskType?
+
+    @Query("""SELECT COUNT(*) FROM TaskType WHERE id_projeto = :projectId AND LOWER(nome) = LOWER(:name)""")
+    suspend fun countByName(projectId: Int, name: String): Int
+
     @Query("SELECT * FROM TaskType WHERE id_projeto = :projectId")
     suspend fun getByProject(projectId: Int): List<TaskType>
 

@@ -16,6 +16,7 @@ import com.example.projetoldii.ui.all.MainScreen
 import com.example.projetoldii.ui.all.routes.HomeRoute
 import com.example.projetoldii.ui.all.routes.ProjectFormRoute
 import com.example.projetoldii.ui.all.routes.ProjectKanBanRoute
+import com.example.projetoldii.ui.all.routes.TaskTypeFormRoute
 import com.example.projetoldii.ui.viewmodels.AuthViewModel
 
 sealed class Screen(val route: String) {
@@ -25,6 +26,10 @@ sealed class Screen(val route: String) {
     object CreateProject : Screen("createProject")
     object ProjectKanBan : Screen("project/{id}"){
         fun routeOf(id: Int) = "project/$id"
+    }
+    object CreateTaskType : Screen("project/{id}/createTaskType"){
+        fun routeOf(projectId: Int) = "project/$projectId/createTaskType"
+
     }
 }
 
@@ -89,6 +94,37 @@ fun AppNavigation(authViewModel: AuthViewModel, projectRepo: ProjectRepository, 
                 projectId = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: return@composable
             )
         }
+
+        composable(Screen.CreateTaskType.route) { backStackEntry ->
+            // guarda de login
+            val user = authViewModel.currentUser.value
+            if (user == null) {
+                navController.navigate(Screen.Login.route) {
+                    popUpTo(0) { inclusive = true }
+                    launchSingleTop = true
+                }
+                return@composable
+            }
+
+            // lê o projectId da rota
+            val pid = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+            if (pid == null) {
+                // se algo deu errado, volta
+                navController.popBackStack()
+                return@composable
+            }
+
+            // abre o formulário (sua Route do form)
+            TaskTypeFormRoute(
+                projectId = pid,
+                taskRepository = taskRepo,
+                onSavedGoBack = { navController.popBackStack() }, // salva e volta p/ Kanban
+                onCancelNav = { navController.popBackStack() },    // cancelar e voltar
+                onLogoutNav = { authViewModel.currentUser.value = null }
+            )
+        }
+
+
 
 
     }
@@ -194,7 +230,9 @@ private fun ProjectKanBanEntry(
          onLogout = { authViewModel.currentUser.value = null },
          onOpenTaskDetail = { taskId -> /* nav p/ detalhe, quando existir */ },
          onCreateTask = { /* nav para form de task */ },
-         onCreateTaskType = { /* nav para form de tipo */ },
+         onCreateTaskType = { projectId ->
+             navController.navigate(Screen.CreateTaskType.routeOf(projectId))
+         },
          onAddProgrammer = { /* nav para form de adicionar programador */ }
     )
 

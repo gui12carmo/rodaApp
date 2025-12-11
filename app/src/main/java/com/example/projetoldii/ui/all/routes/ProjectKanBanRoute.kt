@@ -1,5 +1,6 @@
 package com.example.projetoldii.ui.all.routes
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -43,6 +44,16 @@ fun ProjectKanBanRoute(
 
     ProjectKanBanScreen(
         state = state,
+        typesTab = {
+            TaskTypeListRoute(
+                projectId = projectId,
+                taskRepository = taskRepository,
+                onCreateType = { // TODO: navegue para o formulário de novo tipo usando o projectId do escopo
+                    // ex.: navController.navigate(Screen.CreateTaskType.routeOf(projectId))
+                },
+            )
+        },
+        reportersTab = { androidx.compose.material3.Text("Relatórios (em breve)") },
         onBack = onBack,
         onLogout = vm::requestLogout,
         onConfirmLogout = {
