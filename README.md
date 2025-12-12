@@ -3,11 +3,6 @@
 Aplicativo mobile de **gestão de tarefas, projetos e Kanban**, desenvolvido por **Thales Pires, Guilherme Carmo e Maria Rezende**.  
 O RodaApp permite organizar projetos, acompanhar progresso em tempo real e gerir tarefas de forma colaborativa, incluindo sistema de papéis, atribuição de tarefas e relatórios detalhados.
 
-## :camera_flash: Screenshots
-<!-- Você pode adicionar mais screenshots aqui -->
-<img src="" width="200">
-<img src="" width="200">
-
 ## ✨ Funcionalidades
 
 - ✔️ **TO-DO List completa**
