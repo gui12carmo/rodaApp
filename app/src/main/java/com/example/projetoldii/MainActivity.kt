@@ -18,7 +18,7 @@ import com.example.projetoldii.ui.all.viewmodels.AuthViewModelFactory
 
 class MainActivity : ComponentActivity() {
 
-    // instancia única do DB para esta Activity
+    // instância única do DB para esta Activity
     private val db by lazy { DatabaseProvider.getDatabase(this) }
 
     // repositório de usuário
@@ -55,10 +55,10 @@ class MainActivity : ComponentActivity() {
             ProjetoLDIITheme(darkTheme = false, dynamicColor = false) {
                 Surface {
                     AppNavigation(
-                        authViewModel,
-                        projectRepo,
-                        taskRepo,
-                        moveTaskUseCase
+                        authViewModel = authViewModel,
+                        projectRepo   = projectRepo,
+                        taskRepo      = taskRepo,
+                        moveTask      = moveTaskUseCase   // 👈 nome bate com o parâmetro
                     )
                 }
             }

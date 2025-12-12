@@ -18,10 +18,9 @@ import com.example.projetoldii.ui.all.ProjetoLDIITheme
 import com.example.projetoldii.ui.all.components.BannerUser
 import com.example.projetoldii.ui.all.components.ProjectNav
 import com.example.projetoldii.ui.all.components.ProjectNavBar
-import com.example.projetoldii.ui.all.components.ProjectRole
 import com.example.projetoldii.ui.all.viewmodels.ManagerReportItem
 import com.example.projetoldii.ui.all.viewmodels.ManagerReportViewModel
-import com.example.projetoldii.ui.all.viewmodels.UserRole
+import com.example.projetoldii.ui.all.viewmodels.UserRole   // ✅ usamos UserRole
 
 // ---------- TELA REAL (usa ViewModel e dados do banco) ----------
 
@@ -93,7 +92,7 @@ private fun ManagerReportContent(
         },
         bottomBar = {
             ProjectNavBar(
-                role = UserRole.GESTOR,
+                role = UserRole.GESTOR,   // ✅ gestor
                 selected = ProjectNav.RELATORIOS,
                 onSelect = { nav ->
                     when (nav) {
@@ -113,7 +112,7 @@ private fun ManagerReportContent(
             // Banner com nome do gestor
             BannerUser(
                 userName = managerName,
-                role = ProjectRole.Gestor
+                role = UserRole.GESTOR      // ✅ aqui era ProjectRole.Gestor
             )
 
             Spacer(Modifier.height(16.dp))

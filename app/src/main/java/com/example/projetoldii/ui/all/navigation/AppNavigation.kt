@@ -31,7 +31,7 @@ fun AppNavigation(
     authViewModel: AuthViewModel,
     projectRepo: ProjectRepository,
     taskRepo: TaskRepository,
-    moveTaskUseCase: MoveTaskUseCase,    // 👈 novo parâmetro, bate com o MainActivity
+    moveTask: MoveTaskUseCase,          // 👈 nome igual ao usado no MainActivity
 ) {
     val navController: NavHostController = rememberNavController()
 
@@ -95,8 +95,8 @@ fun AppNavigation(
                     ?.getString("id")
                     ?.toIntOrNull()
                     ?: return@composable
-                // se quiser, futuramente podemos passar também o moveTaskUseCase
-                // moveTaskUseCase = moveTaskUseCase,
+                // se quiser, depois podemos passar o moveTask aqui também
+                // moveTask = moveTask,
             )
         }
     }
@@ -171,8 +171,7 @@ private fun ProjectKanBanEntry(
     taskRepo: TaskRepository,
     navController: NavHostController,
     projectId: Int,
-    // se quiser usar no futuro:
-    // moveTaskUseCase: MoveTaskUseCase,
+    // moveTask: MoveTaskUseCase,  // se/ quando precisar, descomenta e usa
 ) {
     val user = authViewModel.currentUser.value
 

@@ -16,15 +16,19 @@ data class BoardColumn(
 class TaskRepository(
     private val taskDao: TaskDao,
     private val taskTypeDao: TaskTypeDao,
-    private val addProgrammerDao: AddProgrammerDao,
-    val moveTask: Any
+    private val addProgrammerDao: AddProgrammerDao
 ) {
+
+    /** Tarefas concluídas de um programador (relatório do programador). */
     fun observeCompletedTasks(userId: Int): Flow<List<Task>> {
         return taskDao.getCompletedTasks(userId)
-        
+    }
+
+    /** Board/Kanban do projeto: colunas por tipo de tarefa. */
     fun observeBoard(projectId: Int): Flow<List<BoardColumn>> {
         val typesFlow = taskTypeDao.observeByProject(projectId)
         val tasksFlow = taskDao.observeByProject(projectId)
+
         return combine(typesFlow, tasksFlow) { types, tasks ->
             types.map { t ->
                 BoardColumn(
@@ -40,7 +44,4 @@ class TaskRepository(
         val updated = task.copy(id_tipoTarefa = toTypeId)
         taskDao.update(updated)
     }
-
-    }
 }
-
