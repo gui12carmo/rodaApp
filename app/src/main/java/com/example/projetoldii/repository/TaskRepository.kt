@@ -20,7 +20,7 @@ class TaskRepository(
 ) {
     fun observeCompletedTasks(userId: Int): Flow<List<Task>> {
         return taskDao.getCompletedTasks(userId)
-        
+    }
     fun observeBoard(projectId: Int): Flow<List<BoardColumn>> {
         val typesFlow = taskTypeDao.observeByProject(projectId)
         val tasksFlow = taskDao.observeByProject(projectId)
